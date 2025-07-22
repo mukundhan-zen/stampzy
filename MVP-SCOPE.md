@@ -1,50 +1,59 @@
 # MVP SCOPE
-## Feature: Hybrid UI: Minimalist Data Entry & Visual Collection Display
+## Feature: Hybrid User Interface
 
 ### Description 
 
- Streamlined, minimalist forms for adding/editing stamps and a visually engaging gallery to view your collection. Toggle between data and gallery modes.
+ A mobile-first, hybrid UI app with minimalist forms for data entry and visually engaging gallery-style collection browsing. Users can easily switch between data and gallery modes.
 
  ###Scope 
 
- Includes all UI flows for data entry and collection viewing; excludes advanced customization in MVP. Gallery mode supports images based on tier (thumbnails/free, full-size/paid). No dark mode or advanced UI customization in MVP.
+ Includes all UI flows for data entry and collection viewing; excludes advanced customization (e.g., dark mode, advanced theming) in MVP. Gallery mode supports images based on tier (thumbnails for free, full-size for paid). UI switch accessible from main navigation.
 
 ## Feature: Core Item Tracking
 
 ### Description 
 
- Add, edit, and manage detailed records for each stamp (purchase info, images, valuation, sales, etc.), with search, filter, and sort.
+ Comprehensive management of stamp records, including purchase info, images, valuation, currency, and sales status. Enables search, filter, and sort.
 
  ###Scope 
 
- Covers all item entry and management; excludes advanced analytics or community features. Manual valuation entry in MVP. Image storage capped in free tier; expanded for paid tiers.
+ Allows users to add, edit, and delete stamp records with all key details. Image storage capped in free tier; expanded for paid. Manual valuation entry. Supports full and partial sales. Search, filter, and sort included.
 
 ## Feature: Sales & Residual Value Tracking
 
 ### Description 
 
- Mark items as sold (full/partial), record sales details, auto-calculate profit/loss, and update collection value. Dashboard for sales summaries.
+ Track sales (full or partial), record sale details, auto-calculate profit/loss, and update residual values. Dashboard/reporting of sales and collection value.
 
  ###Scope 
 
- Covers all sales tracking and reporting; excludes integration with external marketplaces in MVP. Valuation is user-entered; no automated market pricing in MVP.
+ Users can mark items as sold (full/partial), enter sale details, and see profit/loss calculations. Residual value updates for partial sales. Sales dashboard and history provided.
 
 ## Feature: Spend Limits & Budget Tracking
 
 ### Description 
 
- Set personal spending limits, track spend vs. limits, and receive visual warnings when approaching/exceeding budget.
+ Set personal spend limits (weekly, monthly, etc.), track actual spend vs. limits, and get visual warnings and dashboards.
 
  ###Scope 
 
- Includes all spend tracking and reporting; excludes integration with bank data or advanced analytics. Visual indicators limited to core dashboard in MVP.
+ Users can set/edit spend limits, system aggregates spend from item records, and provides dashboard views with visual indicators and warnings when nearing/exceeding limits.
 
 ## Feature: User Authentication & Authorization
 
 ### Description 
 
- Secure login, registration, and tiered access control.
+ Secure login, account management, and tiered access enforcement (free/paid).
 
  ###Scope 
 
- Includes all authentication/authorization for mobile and cloud APIs; excludes admin/enterprise features in MVP. MFA optional in MVP, required in roadmap; session timeouts must balance security and usability.
+ Implements secure authentication (email/password or SSO), session management, and authorization logic to restrict access to user-specific data and enforce tier limits.
+## USER PREFERENCES:
+Mobile-first, hybrid UI
+Visual and data-driven collection management
+Robust financial and budget tracking
+Extensible for future analytics and social features
+Modern, accessible design
+Manual data entry (no automated market pricing in MVP)
+Tiered access for monetization
+Security and privacy as baseline
