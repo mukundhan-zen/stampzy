@@ -1,50 +1,60 @@
 # MVP SCOPE
-## Feature: Hybrid UI: Minimalist Data Entry & Visual Collection Display
+## Feature: Login and Registration Module
 
 ### Description 
 
- Streamlined, minimalist forms for adding/editing stamps and a visually engaging gallery to view your collection. Toggle between data and gallery modes.
+ Secure user authentication and account management, including registration, login, and password reset flows, with tier-based access control and privacy compliance.
 
  ###Scope 
 
- Includes all UI flows for data entry and collection viewing; excludes advanced customization in MVP. Gallery mode supports images based on tier (thumbnails/free, full-size/paid). No dark mode or advanced UI customization in MVP.
+ Includes minimalist, accessible UI screens for registration, login, and password reset; secure API endpoints for authentication; user data model with tier and privacy controls; validation and error handling; all screens/components in src folder.
 
-## Feature: Core Item Tracking
+## Feature: Stamps Dashboard
 
 ### Description 
 
- Add, edit, and manage detailed records for each stamp (purchase info, images, valuation, sales, etc.), with search, filter, and sort.
+ Central dashboard for users to view purchase/sale history, spend analysis, and manage both singular and collection items, with visual and data-driven modes.
 
  ###Scope 
 
- Covers all item entry and management; excludes advanced analytics or community features. Manual valuation entry in MVP. Image storage capped in free tier; expanded for paid tiers.
+ Includes UI for dashboard, purchase and sale history, spend analysis, and collection views (singular and grouped); toggle between gallery and data modes; responsive, accessible design; API/data integration; tier-based image display; all screens/components in src folder.
 
-## Feature: Sales & Residual Value Tracking
+## Feature: Adding Stamp Flow
 
 ### Description 
 
- Mark items as sold (full/partial), record sales details, auto-calculate profit/loss, and update collection value. Dashboard for sales summaries.
+ Workflow for users to add new stamps, either as single items or as part of a collection, capturing all relevant details and images.
 
  ###Scope 
 
- Covers all sales tracking and reporting; excludes integration with external marketplaces in MVP. Valuation is user-entered; no automated market pricing in MVP.
+ Includes data entry forms, image upload (with tier limits), validation, and integration with backend/database; supports both single and collection entry; error handling; all screens/components in src folder.
 
-## Feature: Spend Limits & Budget Tracking
+## Feature: Purchase Flow
 
 ### Description 
 
- Set personal spending limits, track spend vs. limits, and receive visual warnings when approaching/exceeding budget.
+ Process for users to record the purchase of stamps, whether as single items or collections, with spend tracking and validation.
 
  ###Scope 
 
- Includes all spend tracking and reporting; excludes integration with bank data or advanced analytics. Visual indicators limited to core dashboard in MVP.
+ Includes UI for purchase entry, spend tracking, validation, and integration with dashboard and budget modules; handles both singular and collection purchases; all screens/components in src folder.
 
-## Feature: User Authentication & Authorization
+## Feature: Sale of Stamp Flow
 
 ### Description 
 
- Secure login, registration, and tiered access control.
+ Workflow for users to record the sale of stamps (singular or in collection), track profit/loss, and update collection status.
 
  ###Scope 
 
- Includes all authentication/authorization for mobile and cloud APIs; excludes admin/enterprise features in MVP. MFA optional in MVP, required in roadmap; session timeouts must balance security and usability.
+ Includes UI for sale entry, profit/loss calculation, residual value tracking, and integration with dashboard and item management; supports singular and collection sales; all screens/components in src folder.
+## USER PREFERENCES:
+Mobile-first, hybrid UI with minimalist data entry and gallery modes
+All UI/UX screens and components must reside in src folder structure
+Strict tier enforcement (free vs. paid) for item/image limits and feature access
+Accessible, modern, and visually engaging design (light/dark mode, WCAG 2.1 AA compliant)
+Secure authentication and privacy controls (GDPR/CCPA compliant)
+Cloud-based storage and PWA support
+Budget/spend tracking and proactive alerts
+Export capability for user data (CSV/JSON)
+Extensible for future analytics, social, and marketplace features
