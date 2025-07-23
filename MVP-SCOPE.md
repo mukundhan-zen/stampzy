@@ -3,48 +3,74 @@
 
 ### Description 
 
- Streamlined, minimalist forms for adding/editing stamps and a visually engaging gallery to view your collection. Toggle between data and gallery modes.
+ Streamlined, minimalist forms for adding and editing stamps, with a gallery-style, image-based collection view. Users can toggle between data (list) and gallery (visual) modes.
 
  ###Scope 
 
- Includes all UI flows for data entry and collection viewing; excludes advanced customization in MVP. Gallery mode supports images based on tier (thumbnails/free, full-size/paid). No dark mode or advanced UI customization in MVP.
-
-## Feature: Core Item Tracking
-
-### Description 
-
- Add, edit, and manage detailed records for each stamp (purchase info, images, valuation, sales, etc.), with search, filter, and sort.
-
- ###Scope 
-
- Covers all item entry and management; excludes advanced analytics or community features. Manual valuation entry in MVP. Image storage capped in free tier; expanded for paid tiers.
-
-## Feature: Sales & Residual Value Tracking
-
-### Description 
-
- Mark items as sold (full/partial), record sales details, auto-calculate profit/loss, and update collection value. Dashboard for sales summaries.
-
- ###Scope 
-
- Covers all sales tracking and reporting; excludes integration with external marketplaces in MVP. Valuation is user-entered; no automated market pricing in MVP.
-
-## Feature: Spend Limits & Budget Tracking
-
-### Description 
-
- Set personal spending limits, track spend vs. limits, and receive visual warnings when approaching/exceeding budget.
-
- ###Scope 
-
- Includes all spend tracking and reporting; excludes integration with bank data or advanced analytics. Visual indicators limited to core dashboard in MVP.
+ - Clearly structured forms for item entry and editing
+- Gallery-style collection view with images and key details
+- Toggle between data (list) and gallery (visual) modes
+- Responsive design for mobile use
+- No advanced UI customization or dark mode in MVP
 
 ## Feature: User Authentication & Authorization
 
 ### Description 
 
- Secure login, registration, and tiered access control.
+ Secure login and account management, with tiered access for free and paid users.
 
  ###Scope 
 
- Includes all authentication/authorization for mobile and cloud APIs; excludes admin/enterprise features in MVP. MFA optional in MVP, required in roadmap; session timeouts must balance security and usability.
+ - Secure user registration and login
+- Account management (password reset, logout)
+- Tiered access: free vs. paid
+- All data and actions scoped to authenticated user
+
+## Feature: Core Item Tracking
+
+### Description 
+
+ Add, view, edit, and delete stamp records, including purchase details, images, valuation, and sales status.
+
+ ###Scope 
+
+ - Add/edit/delete stamp records
+- Record purchase details, images, valuation, and sales status
+- Search, filter, and sort collection items
+
+## Feature: Sales & Residual Value Tracking
+
+### Description 
+
+ Mark items as sold (full/partial), track profit/loss, and update collection value with sales dashboard/reporting.
+
+ ###Scope 
+
+ - Mark items as sold (full/partial)
+- Record sale details (date, amount, buyer)
+- Auto-calculate profit/loss and update residual value
+- Sales dashboard and reporting
+
+## Feature: Budget Tracking
+
+### Description 
+
+ Set spend limits (weekly/monthly/yearly), track spending vs. budget, with visual alerts.
+
+ ###Scope 
+
+ - Set custom spend limits
+- Track spending from item records
+- Dashboard with visual indicators and alerts for budget usage
+
+## Feature: Tiered Monetization & Upgrade Path
+
+### Description 
+
+ Free tier (50 items, thumbnails only) and paid tier (increased limits, full-size images, premium features), with upgrade prompts and flows.
+
+ ###Scope 
+
+ - Enforce free tier limits (50 items, thumbnails)
+- Paid tier: increased limits, full-size images, premium features
+- Upgrade prompts and workflow

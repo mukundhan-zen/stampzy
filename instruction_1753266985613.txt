@@ -1,0 +1,6 @@
+Below is the task you need to complete.
+
+TASK: Create the 'Forgot Password' page and form. The page should allow users to enter their email address to request a password reset. Use Shadcn UI and Tailwind CSS for styling, and ensure the form is accessible, mobile-friendly, and visually consistent with the rest of the authentication flows. Place the page at /auth/forgot-password.
+
+Whatever is required to implement this task (create / modify / delete files, components, pages, api routes, utils, etc), implement it. If you need to do any websearch let me know, I can do it for you. If you need clarification or encounter blockers, ask specific questions. Let me know after you completed this task.
+

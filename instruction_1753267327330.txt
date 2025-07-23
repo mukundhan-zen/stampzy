@@ -1,0 +1,6 @@
+Below is the task you need to complete.
+
+TASK: Define the Supabase database schema for stamps and related data. Include standard fields for stamps (unique id, user id, name/title, description, purchase date, purchase cost, seller, currency, valuation, images, sales status, created/updated timestamps). Also include tables for images (with metadata, tier enforcement), sales (supporting full and partial sales, sale date, amount, buyer, profit/loss, residual value), and budgets (spend limits, period, usage). Ensure all references and constraints are in place for robust data integrity and future extensibility. Use normalized relational design and enforce tier-based limits for images/items.
+
+Whatever is required to implement this task (create / modify / delete files, components, pages, api routes, utils, etc), implement it. If you need to do any websearch let me know, I can do it for you. If you need clarification or encounter blockers, ask specific questions. Let me know after you completed this task.
+

@@ -1,0 +1,13 @@
+Below is the task you need to complete.
+
+TASK: Implement the core item management UI and flows for stamps. This includes:
+- A minimalist, mobile-friendly form for adding and editing stamps (fields: name/title, description, purchase date, cost, seller, currency, valuation, images, sales status).
+- List view for all stamps, showing key details (name, thumbnail, purchase date, valuation, status).
+- Edit/delete controls for each item.
+- Integrate with Supabase for CRUD operations and image upload (enforce tier-based limits).
+- Ensure all UI is responsive and meets accessibility standards.
+- Place entry points in main navigation.
+- Handle errors and show user-friendly feedback for all actions.
+
+Whatever is required to implement this task (create / modify / delete files, components, pages, api routes, utils, etc), implement it. If you need to do any websearch let me know, I can do it for you. If you need clarification or encounter blockers, ask specific questions. Let me know after you completed this task.
+

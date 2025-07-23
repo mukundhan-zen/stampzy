@@ -1,0 +1,10 @@
+Below is the task you need to complete.
+
+TASK: Create a server action in `src/app/stamps/actions.ts` to fetch all stamps belonging to the current authenticated user. The action should:
+- Query the Supabase `stamps` table for the current user's records
+- Return all key fields: id, name/title, thumbnail image (if any), purchase date, valuation, and status
+- Handle errors and return user-friendly error messages
+- Ensure proper authentication/authorization checks are in place
+
+Whatever is required to implement this task (create / modify / delete files, components, pages, api routes, utils, etc), implement it. If you need to do any websearch let me know, I can do it for you. If you need clarification or encounter blockers, ask specific questions. Let me know after you completed this task.
+

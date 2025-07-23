@@ -1,0 +1,6 @@
+Below is the task you need to complete.
+
+TASK: Connect the LoginForm component to the login server action. Ensure the form submits credentials to the action, handles loading and error states, and redirects the user to the main dashboard on successful login. Provide clear feedback for invalid credentials or other errors. Use accessible, user-friendly messaging throughout.
+
+Whatever is required to implement this task (create / modify / delete files, components, pages, api routes, utils, etc), implement it. If you need to do any websearch let me know, I can do it for you. If you need clarification or encounter blockers, ask specific questions. Let me know after you completed this task.
+

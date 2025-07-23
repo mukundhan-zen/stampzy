@@ -8,34 +8,43 @@ A mobile-first, hybrid UI app for stamp collectors, combining robust financial t
 ### **functional-hybrid-ui**
 
 **type**: functional
-**scope**: Includes all UI flows for data entry and collection viewing; excludes advanced customization in MVP.
-**title**: Hybrid UI: Minimalist Data Entry and Visual Collection Display
+**scope**: Includes all core and advanced data fields for each item; excludes only those attributes not relevant to stamp collecting or user-defined customization.
+**title**: Hybrid UI: Exhaustive Data Entry and Visual Collection Display
 **spec_id**: functional-hybrid-ui
 **priority**: must-have
 **assumptions**:
-- Collectors value both efficiency and visual engagement.
+- Collectors will require both core and advanced fields for full value.
+- Users expect to review and edit exhaustive details at any time.
 **constraints**:
-- Gallery mode supports images based on tier (thumbnails/free, full-size/paid).
-- No dark mode or advanced UI customization in MVP.
-**description**: The system must support a hybrid user interface: streamlined, minimalist forms for data entry and management, and visually engaging, gallery-style displays for browsing/viewing the collection. Users must be able to switch between modes as needed.
-**last_updated**: 2025-07-20T13:14:25.395437+00:00
+- Mobile-first UI must maintain clarity and performance despite high data field density.
+- Must not sacrifice usability for data completeness.
+**description**: The system must support a hybrid user interface that enables collectors to enter all relevant and exhaustive item data in a streamlined, efficient manner, while also providing a visually rich, gallery-style display for collection browsing. Minimalist refers to the UI’s efficiency and clarity, not to the amount of data collected. Data entry workflows must support comprehensive field coverage for every collectible (including detailed attributes, provenance, notes, multi-currency, and partial sales), and the gallery view must display all key data points visually. Users must be able to switch seamlessly between exhaustive data entry/editing and gallery modes, ensuring no loss of detail or flexibility.
+
+Development Approach (to be followed for this module):
+1. UI/UX Creation First: Design wireframes/mocks for both exhaustive data entry/editor and engaging gallery views; ensure mode toggle is prominent and flows are intuitive.
+2. Database Setup: Ensure all item fields, images, custom fields, and notes are stored efficiently and extensibly.
+3. API Creation: Develop endpoints to retrieve, update, and switch between both modes, handling all fields.
+4. Validations and Final Code Fixes: Validate completeness of data flows, mode switching, and gallery rendering; conduct accessibility/QC testing across all workflows.
+**last_updated**: 2025-07-23T05:11:04.214007+00:00
 **business_rules**:
-- UI switch must be accessible from main navigation.
-- Image size limitations apply by tier.
+- All mandatory and optional fields must be available for each collectible.
+- Custom field definitions must be supported for advanced users.
 **specifications**:
-- Provide clearly structured, minimalist forms for item entry and editing.
-- Implement gallery-style collection view with images and key details.
-- Enable toggle/switch between data (list/table) and gallery (visual) modes.
-- Ensure responsiveness and usability on mobile devices.
-**business_objective**: Maximize usability for data-driven tasks and emotional engagement for collection viewing.
+- Data entry forms must include comprehensive fields: purchase details, seller, multiple images, valuation, multi-currency, provenance, notes, partial sales, and custom user-defined attributes.
+- Minimalist UI layout streamlines navigation and reduces friction, but must not omit or hide any required data fields.
+- Gallery mode must visually display all key data attributes alongside images, either as overlays, expandable cards, or hover/tap details.
+- Switching between modes (data entry/edit and gallery) must preserve all entered information and allow immediate review/editing of exhaustive details.
+- Custom field support must be included for advanced collectors needing additional data capture.
+**business_objective**: Enable comprehensive and flexible data management for collectors while ensuring a visually engaging browsing experience.
 **exception_handling**:
-- If UI mode switch fails, revert to last working mode and alert user.
-- If gallery fails to load images, show placeholders and error message.
+- If a required field is missing, user is prompted before saving.
+- Switching modes does not result in data loss; unsaved changes are preserved.
 **validation_criteria**:
-- Minimalist entry forms are accessible from main navigation.
-- Gallery view displays images according to user tier (thumbnails/full-size).
-- Users can toggle between data and gallery views.
-**business_justification**: Collectors need both efficient cataloging and visually rich experiences for enjoyment and sharing.
+- All relevant fields for each collectible (purchase, cost, seller, images, valuation, currency, provenance, notes, partial sales, custom fields) are available in data entry workflows.
+- Minimalist UI streamlines but does not reduce data input; exhaustive data is captured for each item.
+- Gallery view displays all key data points visually, not just images.
+- Users can toggle between full-detail data entry/edit and gallery modes without losing information.
+**business_justification**: Collectors require exhaustive capture of all relevant attributes for organizing, valuing, and tracking their collections. UI efficiency must not compromise data completeness.
 
 ### **technical-api-design**
 
@@ -132,36 +141,42 @@ A mobile-first, hybrid UI app for stamp collectors, combining robust financial t
 ### **functional-item-tracking**
 
 **type**: functional
-**scope**: Covers all item entry and management; excludes advanced analytics or community features.
+**scope**: Includes all item details, images, valuation, sales status, and search/filter/sort; excludes unrelated collectible types.
 **title**: Core Item Tracking Functionality
 **spec_id**: functional-item-tracking
 **priority**: must-have
 **assumptions**:
-- Users are willing to manually enter detailed records.
-- Collectors require support for both full and partial sales.
+- Collectors will regularly update and review item records.
+- Mobile-first design is essential for adoption.
 **constraints**:
-- Image storage capped in free tier; expanded for paid tiers.
-- Manual valuation entry in MVP.
+- Must support both free and paid tier restrictions on images and item count.
+- Database must efficiently handle large collections.
 **description**: The system must allow users to comprehensively record, view, and edit details for each stamp in their collection, including purchase date, cost, seller, images (thumbnail for free tier, full-size for paid), valuation, currency, and support for partial sales. Users must be able to search, filter, and sort items in their collection.
-**last_updated**: 2025-07-20T13:14:25.195071+00:00
+
+Development Approach (to be followed for this module):
+1. UI/UX Creation First: Design wireframes and user flows for add/edit/view item, list/gallery, and search/filter/sort interfaces.
+2. Database Setup: Define data models for stamps, purchases, images, sales, and user associations.
+3. API Creation: Build and document endpoints for CRUD (create/read/update/delete) of items, images, sales, and search/filter.
+4. Validations and Final Code Fixes: Implement field validation, error handling, business logic (partial sales, tier limits); conduct QA, fix bugs, and finalize workflows.
+**last_updated**: 2025-07-23T05:11:04.023248+00:00
 **business_rules**:
-- Each item must have a unique identifier.
-- Image upload limits apply to free and paid tiers.
+- Enforce tier caps on number of items and image resolution.
+- Protect data integrity on edit/delete.
 **specifications**:
 - Allow entry of purchase details: date, cost, seller, currency.
 - Support entry and display of one or more images per item (thumbnail for free, full-size for paid).
 - Record and update current valuation for each item.
 - Enable marking of partial or full sale of items, updating remaining quantity/value.
 - Provide search, filter (by seller, value, status), and sort (by date, cost, valuation) functions.
-**business_objective**: Enable comprehensive collection management and superior organization for stamp collectors.
+**business_objective**: Enable collectors to fully document, manage, and value their stamp collections efficiently.
 **exception_handling**:
-- If image upload fails, user receives clear error message and can retry.
-- If a partial sale entry is invalid, prompt for correction.
+- Graceful error handling for data entry and image upload failures.
+- User is notified of any tier-related restrictions.
 **validation_criteria**:
 - User can add/edit/delete stamp records with all required fields.
 - Images display as thumbnails or full-size based on tier.
 - Partial sales update item status and value.
-**business_justification**: Collectors need to manage detailed records, surpassing the limitations of spreadsheets and generic tools.
+**business_justification**: Collectors need an organized digital record with rich data and flexible management to replace manual tools.
 
 ### **security-data-protection**
 
@@ -196,33 +211,41 @@ A mobile-first, hybrid UI app for stamp collectors, combining robust financial t
 ### **functional-sales-tracking**
 
 **type**: functional
-**scope**: Covers all sales tracking and reporting; excludes integration with external marketplaces in MVP.
+**scope**: All sales, partial sales, profit/loss, and valuation reporting for stamps.
 **title**: Sales & Residual Value Tracking Functionality
 **spec_id**: functional-sales-tracking
 **priority**: must-have
 **assumptions**:
-- Users will enter accurate sales details.
+- Collectors regularly sell/trade items and track profits.
+- Reporting is a core value driver.
 **constraints**:
-- Valuation is user-entered; no automated market pricing in MVP.
+- Must handle complex sale scenarios (partial sales, multi-currency).
+- Dashboards must remain usable as sales history grows.
 **description**: The system must allow users to mark items as fully or partially sold, record sale details (date, amount, buyer), automatically calculate profit/loss, and update the residual value of items and collection. Sales dashboards should provide summaries and trends.
-**last_updated**: 2025-07-20T13:14:25.327692+00:00
+
+Development Approach (to be followed for this module):
+1. UI/UX Creation First: Create sale entry/edit screens, profit/loss dashboards, and residual value displays.
+2. Database Setup: Define schemas for sales, partial sales, profit/loss calculations, and buyer records.
+3. API Creation: Build endpoints for sale marking, history, and profit/loss analytics.
+4. Validations and Final Code Fixes: Validate sale logic, test profit/loss reporting, ensure accuracy and clarity in all workflows.
+**last_updated**: 2025-07-23T05:11:04.140062+00:00
 **business_rules**:
-- Each sale must be linked to a unique item record.
-- Profit/loss calculations must be transparent and reviewable.
+- Partial sales logic must be precise and auditable.
+- Profit/loss must update in real time.
 **specifications**:
 - Allow marking items as sold (full or partial), with entry of sale details.
 - Auto-calculate and display profit/loss per item and for the full collection.
 - Auto-update residual value for partially sold items.
 - Provide dashboard and reports of sales history, profit/loss, and current collection valuation.
-**business_objective**: Enable collectors to track sales, understand profit/loss, and maintain accurate collection value.
+**business_objective**: Enable collectors to track sales, profits, and collection value in real time.
 **exception_handling**:
-- If user enters inconsistent sale data, prompt for correction.
-- If residual value calculation fails, flag the item for manual review.
+- Handle errors in sale entry or calculation with clear user feedback.
+- Prevent inconsistent state on sale/partial sale actions.
 **validation_criteria**:
 - Sales entries update profit/loss and residual value automatically.
 - Users can view sales history and current collection value.
 - Partial sales update item quantity/value as appropriate.
-**business_justification**: Manual sales tracking is error-prone; automation improves accuracy and confidence.
+**business_justification**: Automated sales and profit tracking provide unique value over manual tools, supporting financial decisions.
 
 ### **security-tier-enforcement**
 
@@ -254,38 +277,126 @@ A mobile-first, hybrid UI app for stamp collectors, combining robust financial t
 - No unauthorized access to paid features.
 **business_justification**: Strict tier enforcement is critical to prevent abuse, ensure fair use, and protect paid feature value.
 
+### **ux-style-theme-guidelines**
+
+**type**: ux
+**scope**: Applies to all UI screens and visual components; excludes branding outside the app and third-party content.
+**title**: App-Wide Style and Theme Guidelines: Modern Vintage Elegance
+**spec_id**: ux-style-theme-guidelines
+**priority**: must-have
+**assumptions**:
+- Target users value both modern minimalism and classic, heritage-inspired detail.
+- Designers/developers will use Tailwind CSS or styled-components for implementation.
+**constraints**:
+- All components must meet WCAG 2.1 AA accessibility standards.
+- Use only scalable, performant SVG icons.
+**description**: The Stamp Collectors Management App must feature a modern, elegant user interface that balances minimalist design with classic heritage accents. The theme should evoke sophistication and attention to detail, while maintaining a clean, accessible, and responsive layout. These guidelines apply globally across all screens and components.
+
+Design Style:
+- Modern minimalist with classic/vintage accents
+- Smooth shadows, subtle borders, and elegant typography (primary: 'Inter' for sans-serif, 'Playfair Display' for serif)
+- Card-based layout with generous white space
+- Light mode as default, with optional dark mode for accessibility and user preference
+
+Color Scheme (Vintage Elegance):
+- Primary: #4A3F35 (Deep Espresso Brown)
+- Secondary: #B48E65 (Antique Gold)
+- Accent 1: #C9D6CF (Muted Sage)
+- Accent 2: #D1C4B2 (Vintage Beige)
+- Background (Light): #FAF8F5 (Paper White)
+- Text (Primary): #2E2E2E
+- Text (Secondary): #6E6E6E
+
+Component Styling Instructions:
+1. Buttons: 12px rounded corners, hover shadows, filled and outline variants in primary/secondary colors
+2. Cards: Soft shadows, light border, bold serif titles, sans-serif body
+3. Navigation: Left sidebar or top navbar, icons, expandable menu for collections
+4. Icons: Line icons with heritage tone (Lucide, Heroicons, Phosphor), 24px grid basis
+
+Imagery & Motif:
+1. Subtle background patterns (postage marks, envelope textures)
+2. Vintage stamp illustrations/frames as decorative accents
+3. All imagery must be responsive, accessible, and optimized for performance
+
+Framework & Accessibility:
+- Use Tailwind CSS (preferred) or styled-components (React) for clean, maintainable, and accessible component structure
+- Ensure all visual elements meet WCAG 2.1 AA standards for contrast and readability
+
+Other Recommendations:
+- Core icons: Lucide or Heroicons for primary use (stroke-based elegance)
+- Bold accents: Phosphor for interactive or highlighted tags
+- Icon fallback: Iconify for missing visuals, optimize for bundle size
+- Maintain iconography harmony: 24px grid, 1.5–2px stroke width for consistency
+- Use SVG icons for crisp scalability and cross-device clarity
+
+Integration Guidelines:
+- Pair Lucide outline icons (main UI) with Phosphor for bold/contextual highlights, fallback via Iconify
+- Maintain consistent spacing, stroke, and color usage across all iconography
+- Validate visual harmony across light/dark modes and accessibility states
+**last_updated**: 2025-07-23T11:44:41.991118+00:00
+**business_rules**:
+- Do not override color palette or icon guidelines without user/brand review.
+- All new screens/components must pass visual and accessibility review before release.
+**specifications**:
+- Apply global color palette and typography as specified across all screens and states.
+- Implement card-based layouts with generous white space, soft shadows, and subtle borders.
+- Style buttons with 12px radius, hover states, and color variants per guidelines.
+- Navigation to use sidebar or top bar with expandable collections, icons per guidelines.
+- All icons SVG-based, 1.5–2px stroke, 24px grid, using Lucide/Heroicons/Phosphor/Iconify as instructed.
+- Decorative backgrounds and stamp motifs used subtly, never interfering with content or accessibility.
+- All components responsive and accessible, using Tailwind CSS or styled-components.
+- Light mode default, dark mode toggle available and fully styled.
+**business_objective**: Deliver a visually engaging, elegant, and accessible collector app that appeals to both modern and heritage sensibilities.
+**exception_handling**:
+- Fallback to accessible color/contrast alternatives if palette fails accessibility audit.
+- Replace missing icons with Iconify or accessible alternatives.
+**validation_criteria**:
+- All screens/components use specified color palette, typography, and spacing.
+- Buttons, cards, and navigation conform to guidelines (rounded corners, shadows, icon use).
+- Icon sets are consistent (Lucide, Heroicons, Phosphor, Iconify fallback), stroke width 1.5–2px, 24px grid.
+- Backgrounds and decorative imagery use subtle vintage motifs, are responsive and accessible.
+- Implementation uses Tailwind CSS or styled-components, and passes WCAG 2.1 AA audits.
+**business_justification**: A refined, sophisticated visual experience increases collector trust, engagement, and retention, supporting premium positioning and broad appeal.
+
 ### **functional-budget-tracking**
 
 **type**: functional
-**scope**: Includes all spend tracking and reporting; excludes integration with bank data or advanced analytics.
+**scope**: Covers all spend/budget tracking for stamp purchases; excludes unrelated expense types.
 **title**: Spend Limits & Budget Tracking Functionality
 **spec_id**: functional-budget-tracking
 **priority**: must-have
 **assumptions**:
-- Users are motivated to set and monitor budgets regularly.
+- Collectors want proactive spend management.
+- Alerts must be timely and actionable.
 **constraints**:
-- Spend and budget data based only on item entries.
-- Visual indicators limited to core dashboard in MVP.
+- Must operate efficiently with historical spend data.
+- UI must remain clear as data volume grows.
 **description**: The system must allow users to set personal spending limits (weekly, monthly, quarterly, yearly), track actual spend vs. limits, and view breakdowns via dashboards and reports. Visual warnings must notify users when they approach/exceed their budget.
-**last_updated**: 2025-07-20T13:14:25.262054+00:00
+
+Development Approach (to be followed for this module):
+1. UI/UX Creation First: Design dashboards, limit-setting screens, and visual warning flows.
+2. Database Setup: Define models for spend limits, budgets, alerts, and transaction history.
+3. API Creation: Build endpoints for setting, updating, fetching, and alerting on spend limits and budget data.
+4. Validations and Final Code Fixes: Implement validation for limit logic, test reporting accuracy, and finalize alert mechanisms.
+**last_updated**: 2025-07-23T05:11:04.084814+00:00
 **business_rules**:
-- Spend limits must be positive numbers and editable at any time.
-- Dashboards must update in real-time with new entries.
+- Users can adjust or reset limits as needed.
+- Alerts must use clear, actionable language.
 **specifications**:
 - Enable users to set custom spend limits (by week, month, quarter, year).
 - Automatically aggregate and display spend from item records.
 - Provide dashboard views with visual indicators of spend vs. limit.
 - Display breakdowns by seller, period, and category.
 - Trigger visual warnings/alerts when usage nears/exceeds limit.
-**business_objective**: Prevent overspending, increase financial awareness, and provide actionable insights for collectors.
+**business_objective**: Help collectors manage and control their spend on stamps to prevent overspending and support financial goals.
 **exception_handling**:
-- If spend entry exceeds limit, show warning but allow override.
-- If dashboard fails to load, provide fallback text summary.
+- Warn and guide users if limits are exceeded or not set.
+- Handle calculation/data sync errors gracefully.
 **validation_criteria**:
 - User can set and edit spend limits in multiple timeframes.
 - System tracks spending and displays budget usage visually.
 - Warnings trigger automatically when approaching/exceeding limits.
-**business_justification**: Collectors need proactive controls to avoid exceeding budgets and to understand spending patterns.
+**business_justification**: Budget tracking and proactive alerts reduce financial risk and increase app utility.
 
 ### **ux-hybrid-ui-modern-visuals**
 
@@ -321,6 +432,43 @@ A mobile-first, hybrid UI app for stamp collectors, combining robust financial t
 - Hybrid toggle between minimalist (data) and gallery (visual) modes is seamless.
 - Users rate visual style as modern/elegant in user feedback.
 **business_justification**: A premium visual experience differentiates the app, appeals to both casual and power users, and supports accessibility goals.
+
+### **ux-global-styles-consistency**
+
+**type**: ux
+**scope**: Applies to all UI screens, components, and states across web and mobile; excludes third-party or embedded content.
+**title**: Global Stylesheet (Global.css) for Application-Wide Consistency
+**spec_id**: ux-global-styles-consistency
+**priority**: must-have
+**assumptions**:
+- App will use CSS modules, Tailwind, or a CSS-in-JS solution that supports global style management.
+- All developers/designers will apply and extend only from Global.css for base styles.
+**constraints**:
+- Must support both light/dark modes and accessibility requirements.
+- Global.css must be the single source of truth for design tokens.
+**description**: The Stamp Purchase Tracker app must implement a centralized global stylesheet (Global.css or equivalent) to enforce consistent visual design, spacing, typography, color palettes, and component styling across all screens and modules. The global stylesheet ensures that all components inherit the defined style/theme standards, supporting maintainability, scalability, and rapid iteration, while aligning with the Modern Vintage Elegance theme and accessibility requirements. Changes to core design tokens (colors, fonts, spacing, etc.) must propagate automatically throughout the app via this global stylesheet, reducing the risk of inconsistencies.
+**last_updated**: 2025-07-23T11:46:26.335480+00:00
+**business_rules**:
+- No overrides of global styles without design review.
+- All new components must reference and inherit from Global.css.
+**specifications**:
+- Create and maintain a Global.css (or equivalent, e.g., Tailwind base/theme config, styled-components theme provider) as the single source of truth for all base styles.
+- Define all core design tokens (colors, fonts, spacing, border radius, shadows, etc.) in Global.css.
+- Apply global resets and base element styles to ensure cross-browser consistency and predictable inheritance.
+- Reference all component-level styles (buttons, cards, navigation, icons, etc.) from Global.css to prevent duplication or drift.
+- Support CSS variables (custom properties) for dynamic theming (light/dark mode, high contrast).
+- Automatically propagate updates to core tokens to all UI components via the global stylesheet.
+- Test for visual consistency and accessibility on all supported devices and browsers.
+**business_objective**: Ensure visually consistent, maintainable, and scalable UI design across the full application lifecycle.
+**exception_handling**:
+- If style conflict or drift is detected, audit and refactor to restore consistency via Global.css.
+- Fallback to accessible default styles if a theme variable is missing.
+**validation_criteria**:
+- All screens and components inherit base styles from a single global stylesheet (Global.css or equivalent).
+- Visual style, typography, color palette, and spacing are consistent across all modules and states.
+- Changes to design tokens in Global.css automatically update all dependent components.
+- Global.css supports both light and dark mode variables, and meets accessibility requirements.
+**business_justification**: Global stylesheets and design tokens minimize inconsistencies, speed up iteration, and support brand cohesion while meeting accessibility standards.
 
 ### **integration-cloud-storage-pwa**
 
@@ -873,5 +1021,6 @@ A mobile-first, hybrid UI app for stamp collectors, combining robust financial t
 - Visual feedback and microinteractions reinforce accessibility (not color-only cues) and emotional engagement.
 - Hybrid UI toggle is seamless and maintains clarity for all user types, including those using assistive technologies.
 **business_justification**: Unified cross-category standards ensure both inclusivity and emotional engagement, increasing adoption and reducing churn risk.
+
 
 

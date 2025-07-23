@@ -1,0 +1,12 @@
+Below is the task you need to complete.
+
+TASK: Create the 'Edit Stamp' page at `/stamps/[id]/edit` that renders the `StampForm` component in edit mode. The page should:
+- Fetch the existing stamp data for the given ID and pre-populate the form fields
+- Allow users to update any field, including images
+- Integrate with Supabase to handle update actions
+- Ensure only the owner of the stamp can edit it
+- Be mobile-friendly and accessible, with clear navigation back to the stamps list
+- Show user-friendly feedback for success and errors
+
+Whatever is required to implement this task (create / modify / delete files, components, pages, api routes, utils, etc), implement it. If you need to do any websearch let me know, I can do it for you. If you need clarification or encounter blockers, ask specific questions. Let me know after you completed this task.
+

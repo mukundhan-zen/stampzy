@@ -1,10 +1,16 @@
-"use client";
+'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { useState, useTransition } from "react"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
+import { format } from "date-fns"
+import { CalendarIcon } from "@radix-ui/react-icons"
 
-import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
 import {
   Form,
   FormControl,
@@ -13,340 +19,237 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon } from "lucide-react";
-import { Calendar } from "@/components/ui/calendar";
-import { cn } from "@/lib/utils";
-import { format } from "date-fns";
+} from "@/components/ui/select"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { FormError } from "@/components/auth/form-error"
+import { FormSuccess } from "@/components/auth/form-success"
+// The actual server actions will be created in the next step.
+// import { createStamp, updateStamp } from "@/app/stamps/actions"
 
 const formSchema = z.object({
-  // Required fields
-  title: z.string().min(1, "Title is required"),
-  purchaseDate: z.date({ required_error: "Purchase date is required" }),
-  cost: z.coerce.number().min(0, "Cost must be a positive number"),
-  seller: z.string().min(1, "Seller is required"),
-  images: z.array(z.string()).min(1, "At least one image is required"),
-  valuation: z.coerce.number().min(0, "Valuation must be a positive number"),
-  currency: z.string().min(1, "Currency is required"),
+  name: z.string().min(1, "Name is required."),
+  description: z.string().optional(),
+  purchase_date: z.date().optional(),
+  cost: z.coerce.number().optional(),
+  seller: z.string().optional(),
+  currency: z.string().length(3, "Currency must be a 3-letter code.").optional(),
+  valuation: z.coerce.number().optional(),
+  status: z.enum(["owned", "sold"]).default("owned"),
+})
 
-  // Optional fields
-  country: z.string().optional(),
-  year: z.coerce.number().optional(),
-  catalogNumber: z.string().optional(),
-  condition: z.string().optional(),
-  perforation: z.string().optional(),
-  watermark: z.string().optional(),
-  color: z.string().optional(),
-  grade: z.string().optional(),
-  notes: z.string().optional(),
-  tags: z.array(z.string()).optional(),
-  location: z.string().optional(),
-  certificationInfo: z.string().optional(),
-  provenance: z.string().optional(),
-});
-
-export type StampFormValues = z.infer<typeof formSchema>;
+// Define a type for the stamp data for props
+type StampData = z.infer<typeof formSchema> & { id?: string };
 
 interface StampFormProps {
-  initialData?: Partial<StampFormValues>;
-  onSubmit: (values: StampFormValues) => void;
+  initialData?: StampData | null;
 }
 
-export function StampForm({ initialData, onSubmit }: StampFormProps) {
-  const form = useForm<StampFormValues>({
+export function StampForm({ initialData }: StampFormProps) {
+  const router = useRouter();
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
+  const [isPending, startTransition] = useTransition();
+
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData || {},
+    defaultValues: initialData || {
+      name: "",
+      description: "",
+      status: "owned",
+    },
   });
+
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    setError("");
+    setSuccess("");
+
+    startTransition(() => {
+      // Placeholder for server action call
+      console.log("Form submitted", values);
+      // const action = initialData
+      //   ? updateStamp({ id: initialData.id!, ...values })
+      //   : createStamp(values);
+
+      // action.then((data) => {
+      //   if (data.success) {
+      //     setSuccess(initialData ? "Stamp updated successfully!" : "Stamp created successfully!");
+      //     router.push('/stamps');
+      //   } else {
+      //     setError(data.message);
+      //   }
+      // });
+
+      // Simulate success for now
+      setSuccess(initialData ? "Stamp updated successfully! (Simulated)" : "Stamp created successfully! (Simulated)");
+      setTimeout(() => router.push('/stamps'), 1000);
+    });
+  };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <Card>
-          <CardHeader>
-            <CardTitle>Primary Details</CardTitle>
-          </CardHeader>
-          <CardContent className="grid md:grid-cols-2 gap-6">
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Title</FormLabel>
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name / Title</FormLabel>
+              <FormControl>
+                <Input placeholder="e.g., Penny Black" {...field} disabled={isPending} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Any details about the stamp..." {...field} disabled={isPending} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <FormField
+            control={form.control}
+            name="purchase_date"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Purchase Date</FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-full pl-3 text-left font-normal",
+                          !field.value && "text-muted-foreground"
+                        )}
+                        disabled={isPending}
+                      >
+                        {field.value ? (
+                          format(field.value, "PPP")
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      disabled={(date) =>
+                        date > new Date() || date < new Date("1800-01-01")
+                      }
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="status"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Status</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isPending}>
                   <FormControl>
-                    <Input placeholder="e.g., Penny Black" {...field} />
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a status" />
+                    </SelectTrigger>
                   </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+                  <SelectContent>
+                    <SelectItem value="owned">Owned</SelectItem>
+                    <SelectItem value="sold">Sold</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <FormField
+                control={form.control}
+                name="cost"
+                render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Purchase Cost</FormLabel>
+                        <FormControl>
+                            <Input type="number" placeholder="10.00" {...field} disabled={isPending} />
+                        </FormControl>
+                        <FormMessage />
+                    </FormItem>
+                )}
             />
             <FormField
-              control={form.control}
-              name="purchaseDate"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Purchase Date</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "w-full pl-3 text-left font-normal",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value ? (
-                            format(field.value, "PPP")
-                          ) : (
-                            <span>Pick a date</span>
-                          )}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="cost"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Cost</FormLabel>
-                  <FormControl>
-                    <Input type="number" placeholder="e.g., 10.50" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="seller"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Seller</FormLabel>
-                  <FormControl>
-                    <Input placeholder="e.g., John Doe" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-             <FormField
-              control={form.control}
-              name="valuation"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Valuation</FormLabel>
-                  <FormControl>
-                    <Input type="number" placeholder="e.g., 15.00" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-             <FormField
                 control={form.control}
                 name="currency"
                 render={({ field }) => (
                     <FormItem>
-                    <FormLabel>Currency</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormLabel>Currency</FormLabel>
                         <FormControl>
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select a currency" />
-                        </SelectTrigger>
+                            <Input placeholder="USD" {...field} maxLength={3} disabled={isPending} />
                         </FormControl>
-                        <SelectContent>
-                        <SelectItem value="USD">USD</SelectItem>
-                        <SelectItem value="EUR">EUR</SelectItem>
-                        <SelectItem value="GBP">GBP</SelectItem>
-                        </SelectContent>
-                    </Select>
-                    <FormMessage />
+                        <FormMessage />
                     </FormItem>
                 )}
-                />
-            <FormField
-              control={form.control}
-              name="images"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Images</FormLabel>
-                  <FormControl>
-                    {/* Basic input for now, to be replaced with a proper image uploader */}
-                    <Input placeholder="Image URLs (comma-separated)" {...field} onChange={e => field.onChange(e.target.value.split(','))} />
-                  </FormControl>
-                   <FormDescription>
-                    This will be replaced by a proper image uploader component.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Advanced Details</CardTitle>
-          </CardHeader>
-          <CardContent className="grid md:grid-cols-2 gap-6">
-          <FormField
-              control={form.control}
-              name="country"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Country</FormLabel>
-                  <FormControl>
-                    <Input placeholder="e.g., United Kingdom" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="year"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Year</FormLabel>
-                  <FormControl>
-                    <Input type="number" placeholder="e.g., 1840" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-             <FormField
-              control={form.control}
-              name="catalogNumber"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Catalog Number</FormLabel>
-                  <FormControl>
-                    <Input placeholder="e.g., SG1" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
             />
             <FormField
                 control={form.control}
-                name="condition"
+                name="valuation"
                 render={({ field }) => (
                     <FormItem>
-                    <FormLabel>Condition</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormLabel>Valuation</FormLabel>
                         <FormControl>
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select a condition" />
-                        </SelectTrigger>
+                            <Input type="number" placeholder="25.00" {...field} disabled={isPending} />
                         </FormControl>
-                        <SelectContent>
-                        <SelectItem value="mint">Mint</SelectItem>
-                        <SelectItem value="used">Used</SelectItem>
-                        <SelectItem value="faulty">Faulty</SelectItem>
-                        </SelectContent>
-                    </Select>
-                    <FormMessage />
+                        <FormMessage />
                     </FormItem>
                 )}
-                />
-            <FormField
-              control={form.control}
-              name="perforation"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Perforation</FormLabel>
-                  <FormControl>
-                    <Input placeholder="e.g., 14" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
             />
-            <FormField
-              control={form.control}
-              name="watermark"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Watermark</FormLabel>
-                  <FormControl>
-                    <Input placeholder="e.g., Small Crown" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="color"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Color</FormLabel>
-                  <FormControl>
-                    <Input placeholder="e.g., Black" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-             <FormField
-              control={form.control}
-              name="grade"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Grade</FormLabel>
-                  <FormControl>
-                    <Input placeholder="e.g., Fine" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="notes"
-              render={({ field }) => (
-                <FormItem className="md:col-span-2">
-                  <FormLabel>Notes</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="Any additional notes..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </CardContent>
-        </Card>
+        </div>
 
-        <Button type="submit">
-            {initialData ? 'Save Changes' : 'Create Stamp'}
+        {/* Placeholder for Image Upload */}
+        <div>
+            <h3 className="text-lg font-medium">Images</h3>
+            <div className="mt-4 p-6 border-dashed border-2 border-muted-foreground/50 rounded-lg text-center">
+                <p className="text-muted-foreground">Image upload functionality will be here.</p>
+                <p className="text-sm text-muted-foreground/80">Tier limits will be enforced.</p>
+            </div>
+        </div>
+
+        <FormError message={error} />
+        <FormSuccess message={success} />
+
+        <Button type="submit" disabled={isPending}>
+            {isPending ? (initialData ? 'Updating Stamp...' : 'Creating Stamp...') : (initialData ? 'Update Stamp' : 'Create Stamp')}
         </Button>
       </form>
     </Form>
-  );
+  )
 }

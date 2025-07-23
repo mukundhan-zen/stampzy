@@ -1,0 +1,6 @@
+Below is the task you need to complete.
+
+TASK: Update the main layout and home page to prepare for authentication and navigation. Ensure a responsive, mobile-friendly header and footer are present, with navigation links for registration, login, and main app sections. Include placeholders for authentication state (e.g., show login/register if not authenticated, show dashboard/logout if authenticated). Use Shadcn UI components and Tailwind CSS for styling.
+
+Whatever is required to implement this task (create / modify / delete files, components, pages, api routes, utils, etc), implement it. If you need to do any websearch let me know, I can do it for you. If you need clarification or encounter blockers, ask specific questions. Let me know after you completed this task.
+
