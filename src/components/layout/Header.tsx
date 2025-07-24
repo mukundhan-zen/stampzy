@@ -21,6 +21,12 @@ export async function Header() {
             >
               Dashboard
             </Link>
+            <Link
+              href="/budgets"
+              className="text-sm font-medium hover:underline underline-offset-4 self-center"
+            >
+              Budgets
+            </Link>
             <LogoutButton />
           </>
         ) : (
